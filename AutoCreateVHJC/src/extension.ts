@@ -3,6 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 const fs = require('fs');
+//const fpath = require('path')
 
 function mkdir(path:string,callback:Function,index?:number){
     let theIndex=index||0;
@@ -63,12 +64,17 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showInformationMessage('please select a folder!');
             return;
         }
-        let path=uri.fsPath;
-        let pathItems=path.replace(/\//g,'\\').split('\\');
+        let path=uri.fsPath.replace(/\//g,'\\');
+        let pathItems=path.split('\\');
         let fileName=pathItems[pathItems.length-1];
         let jsPath=`${path}\\${fileName}.js`;
         let htmlPath=`${path}\\${fileName}.html`;
         let cssPath=`${path}\\${fileName}.css`;
+        let linkedVuePath=path.replace('App','_linkedvuefile');
+        let vuePath=`${linkedVuePath}\\${fileName}.vue`;
+        let relativeDirPath=path.substring(path.indexOf('App'));
+        let backDirPath = relativeDirPath.split('\\').map(_=>'..').join('\\');
+        let relativeLinkPath=`${backDirPath}\\${relativeDirPath}\\${fileName}`
 
         fs.exists(jsPath,(exists:boolean)=>{
             if(exists)
@@ -100,9 +106,19 @@ export function activate(context: vscode.ExtensionContext) {
             });
         });
 
-        mkdir(path+'\\c\\cc',()=>{
+        //d:\PC\App\Pages\V1\V\V.js
 
-
+        mkdir(linkedVuePath,()=>{
+            fs.exists(vuePath,(exists:boolean)=>{
+                if(exists)
+                {
+                   return;
+                }
+                
+                fs.writeFile(vuePath, `<template src="${relativeLinkPath}.html"></template><script src="${relativeLinkPath}.js"></script><style lang="scss" src="${relativeLinkPath}.scss" scoped></style>`, "utf8", () => {
+                    vscode.window.setStatusBarMessage('error', 5000);
+                });
+            });
         });
 
       
