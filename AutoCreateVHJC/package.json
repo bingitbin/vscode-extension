@@ -11,25 +11,22 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello",
         "onCommand:extension.addFile"
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
-        },
+        "commands": [
         {
-				"command": "extension.addFile",
-				"title": "新建Html、Css、Js、Vue"
-			}
+            "command": "extension.addFile",
+            "title": "Add Html、Css、Js、Vue File"
+        }
     ],
     "menus": {
 			"explorer/context": [
 				{
 					"command": "extension.addFile",
-                    "group": "extension"
+                    "group": "extension",
+                    "when":"explorerResourceIsFolder"
 				}
 			]
 		}

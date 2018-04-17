@@ -31,6 +31,7 @@ function mkdir(path:string,callback:Function,index?:number){
         fs.mkdir(thePath,(err:Error)=>{
            if(err)
            {
+               vscode.window.showErrorMessage(err.message);
                return;
            }
            mkdir(path,callback,endIndex+1);
@@ -43,21 +44,6 @@ function mkdir(path:string,callback:Function,index?:number){
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "AautoCreateVHJC" is now active!');
-
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.sayHello', () => {
-        // The code you place here will be executed every time your command is executed
-
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
-    });
-
     let addfile = vscode.commands.registerCommand('extension.addFile', (uri) => {
         // The code you place here will be executed every time your command is executed
         if (!(uri instanceof vscode.Uri)) {
@@ -81,8 +67,8 @@ export function activate(context: vscode.ExtensionContext) {
             {
                return;
             }
-            fs.writeFile(jsPath, 'js', "utf8", () => {
-                vscode.window.setStatusBarMessage('error', 5000);
+            fs.writeFile(jsPath, 'export default {\n\tdata(){\n\t\treturn{}\n\t},\n\tcreated(){\n\t},\n\tcomponents:{\n\t}\n}', "utf8", (err:Error) => {
+                err&&vscode.window.showErrorMessage(err.message);
             });
         });
 
@@ -91,8 +77,8 @@ export function activate(context: vscode.ExtensionContext) {
             {
                return;
             }
-            fs.writeFile(htmlPath, 'html', "utf8", () => {
-                vscode.window.setStatusBarMessage('error', 5000);
+            fs.writeFile(htmlPath, '<div>\n</div>', "utf8", (err:Error) => {
+                err&&vscode.window.showErrorMessage(err.message);
             });
         });
 
@@ -101,12 +87,10 @@ export function activate(context: vscode.ExtensionContext) {
             {
                return;
             }
-            fs.writeFile(cssPath, 'css', "utf8", () => {
-                vscode.window.setStatusBarMessage('error', 5000);
+            fs.writeFile(cssPath, 'css', "utf8", (err:Error) => {
+                err&&vscode.window.showErrorMessage(err.message);
             });
         });
-
-        //d:\PC\App\Pages\V1\V\V.js
 
         mkdir(linkedVuePath,()=>{
             fs.exists(vuePath,(exists:boolean)=>{
@@ -115,33 +99,12 @@ export function activate(context: vscode.ExtensionContext) {
                    return;
                 }
                 
-                fs.writeFile(vuePath, `<template src="${relativeLinkPath}.html"></template><script src="${relativeLinkPath}.js"></script><style lang="scss" src="${relativeLinkPath}.scss" scoped></style>`, "utf8", () => {
-                    vscode.window.setStatusBarMessage('error', 5000);
+                fs.writeFile(vuePath, `<template src="${relativeLinkPath}.html"></template><script src="${relativeLinkPath}.js"></script><style lang="scss" src="${relativeLinkPath}.scss" scoped></style>`, "utf8", (err:Error) => {
+                    err&&vscode.window.showErrorMessage(err.message);
                 });
             });
         });
-
-      
-        // ['c','cc'].forEach(_=>{
-        //     path+='\\'+_;
-        //     console.log(path);
-        //     fs.exists(path,(exists:boolean)=>{
-        //         if(exists)
-        //         {
-        //            return;
-        //         }
-        //         fs.mkdir(path,(err:Error)=>{
-        //             console.log(err);
-        //         })
-        //     });
-        // });
-        
-        console.log(uri);
-        // Display a message box to the user
-        vscode.window.showInformationMessage('extension.addfile!');
     });
-
-    context.subscriptions.push(disposable);
     context.subscriptions.push(addfile);
 }
 
