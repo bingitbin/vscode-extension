@@ -1,6 +1,6 @@
 {
-    "name": "AautoCreateVHJC",
-    "displayName": "AautoCreateVHJC",
+    "name": "AutoCreateVHJC",
+    "displayName": "AddVHJC",
     "description": "auto create vue html js css",
     "version": "0.0.1",
     "publisher": "xbzhang",
