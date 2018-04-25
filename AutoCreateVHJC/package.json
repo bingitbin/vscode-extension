@@ -2,7 +2,7 @@
     "name": "AddVHJC",
     "displayName": "AddVHJC",
     "description": "auto create vue html js css",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "publisher": "xbzhang",
     "engines": {
         "vscode": "^1.22.0"
@@ -13,6 +13,7 @@
     "activationEvents": [
         "onCommand:extension.addFile"
     ],
+    "icon": "icon.png",
     "main": "./out/extension",
     "contributes": {
         "commands": [
