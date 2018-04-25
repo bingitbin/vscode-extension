@@ -64,13 +64,13 @@ export function activate(context: vscode.ExtensionContext) {
         let jsPath=`${path}\\${fileName}.js`;
         let htmlPath=`${path}\\${fileName}.html`;
         let cssPath=`${path}\\${fileName}.scss`;
-        let linkedVuePath=path.replace('App','linkedvuefile');
+        let linkedVuePath=path.replace('App','linkedvues');
         //路径不一致
         linkedVuePath=linkedVuePath.substring(0,linkedVuePath.lastIndexOf('\\'+fileName));
         let vuePath=`${linkedVuePath}\\${fileName}.vue`;
         let relativeDirPath=path.substring(path.indexOf('App'));
         //路径不一致
-        let relativeVueDirPath=linkedVuePath.substring(linkedVuePath.indexOf('linkedvuefile'));
+        let relativeVueDirPath=linkedVuePath.substring(linkedVuePath.indexOf('linkedvues'));
         //let backDirPath = relativeDirPath.split('\\').map(_=>'..').join('\\');
         //路径不一致
         let backDirPath = relativeVueDirPath.split('\\').map(_=>'..').join('\\');
