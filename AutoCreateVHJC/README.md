@@ -2,7 +2,7 @@
 
 一个自动创建vue、html、js、css的VSCode插件
 
-![效果图](https://github.com/bingitbin/vscode-extension/blob/master/AutoCreateVHJC/screenshots/screenshots.png)
+![效果图](https://raw.githubusercontent.com/bingitbin/vscode-extension/master/AutoCreateVHJC/screenshots/screenshots.png)
 
 # Install
 

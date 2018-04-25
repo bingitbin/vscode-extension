@@ -2,7 +2,7 @@
     "name": "AddVHJC",
     "displayName": "AddVHJC",
     "description": "auto create vue html js css",
-    "version": "0.0.1",
+    "version": "0.0.4",
     "publisher": "xbzhang",
     "engines": {
         "vscode": "^1.22.0"
@@ -43,5 +43,12 @@
         "vscode": "^1.1.6",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
-    }
+    },
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/bingitbin/vscode-extension/tree/master/AutoCreateVHJC"
+	},
+	"bugs": {
+		"url": "https://github.com/bingitbin/vscode-extension/issues"
+	}
 }

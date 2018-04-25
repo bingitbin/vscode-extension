@@ -12,10 +12,10 @@
       <Property Id="Microsoft.VisualStudio.Code.Engine" Value="^1.9.0" />
       <Property Id="Microsoft.VisualStudio.Code.ExtensionDependencies" Value="" />
       
-        <Property Id="Microsoft.VisualStudio.Services.Links.Source" Value="https://github.com/bingitbin/vscode-extension.git" />
-        <Property Id="Microsoft.VisualStudio.Services.Links.Getstarted" Value="https://github.com/bingitbin/vscode-extension.git" />
+        <Property Id="Microsoft.VisualStudio.Services.Links.Source" Value="https://github.com/bingitbin/vscode-extension/tree/master/AutoCreateVHJC" />
+        <Property Id="Microsoft.VisualStudio.Services.Links.Getstarted" Value="https://github.com/bingitbin/vscode-extension/tree/master/AutoCreateVHJC" />
         
-          <Property Id="Microsoft.VisualStudio.Services.Links.GitHub" Value="https://github.com/bingitbin/vscode-extension.git" />
+          <Property Id="Microsoft.VisualStudio.Services.Links.GitHub" Value="https://github.com/bingitbin/vscode-extension/tree/master/AutoCreateVHJC" />
         
       
       <Property Id="Microsoft.VisualStudio.Services.Links.Support" Value="https://github.com/bingitbin/vscode-extension/issues" />
