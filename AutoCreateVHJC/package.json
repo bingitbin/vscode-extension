@@ -2,10 +2,10 @@
     "name": "AddVHJC",
     "displayName": "AddVHJC",
     "description": "auto create vue html js css",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "publisher": "xbzhang",
     "engines": {
-        "vscode": "^1.22.0"
+        "vscode": "^1.12.0"
     },
     "categories": [
         "Other"
