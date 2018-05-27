@@ -7,7 +7,7 @@ const fs = require('fs');
 
 function mkdir(path:string,callback:Function,index?:number){
     let theIndex=index||0;
-    let endIndex=path.indexOf('\\',theIndex);
+    let endIndex=path.indexOf('/',theIndex);
     if(endIndex==-1)
     {
         if(theIndex<path.length)
@@ -50,33 +50,45 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showWarningMessage('please select a folder!');
             return;
         }
+        
+        let path=uri.fsPath.replace(/\\/g,'\/');
 
-        let path=uri.fsPath.replace(/\//g,'\\');
-
-        if(path.indexOf('\\App\\')<0)
+        if(path.indexOf('/App/')<0)
         {
             vscode.window.showWarningMessage('must be under the app\'s subfolder!');
             return;
         }
 
-        let pathItems=path.split('\\');
+        let pathItems=path.split('/');
         let fileName=pathItems[pathItems.length-1];
-        let jsPath=`${path}\\${fileName}.js`;
-        let htmlPath=`${path}\\${fileName}.html`;
-        let cssPath=`${path}\\${fileName}.scss`;
-        let linkedVuePath=path.replace('App','linkedvues');
+        let jsPath=`${path}/${fileName}.js`;
+        let htmlPath=`${path}/${fileName}.html`;
+        let cssPath=`${path}/${fileName}.scss`;
+        let linkedVueDirName='linkedvue';
+        let linkedVuePath=path.replace('App',linkedVueDirName);
         //路径不一致
-        linkedVuePath=linkedVuePath.substring(0,linkedVuePath.lastIndexOf('\\'+fileName));
-        let vuePath=`${linkedVuePath}\\${fileName}.vue`;
+        linkedVuePath=linkedVuePath.substring(0,linkedVuePath.lastIndexOf('/'+fileName));
+        let vuePath=`${linkedVuePath}/${fileName}.vue`;
         let relativeDirPath=path.substring(path.indexOf('App'));
         //路径不一致
-        let relativeVueDirPath=linkedVuePath.substring(linkedVuePath.indexOf('linkedvues'));
+        let relativeVueDirPath=linkedVuePath.substring(linkedVuePath.indexOf(linkedVueDirName));
         //let backDirPath = relativeDirPath.split('\\').map(_=>'..').join('\\');
         //路径不一致
-        let backDirPath = relativeVueDirPath.split('\\').map(_=>'..').join('\\');
-        let relativeLinkPath=`${backDirPath}\\${relativeDirPath}\\${fileName}`
+        let backDirPath = relativeVueDirPath.split('/').map(_=>'..').join('/');
+        let relativeLinkPath=`${backDirPath}/${relativeDirPath}/${fileName}`
 
+        //entry
+        let entryDirName='entryjs';
+        let entryPath=linkedVuePath.replace(linkedVueDirName,entryDirName).replace('/Pages','');
+        let entryDirPath=entryPath.substring(0,entryPath.indexOf(entryDirName)+entryDirName.length);
+        let entryJsPath=`${entryPath}/${fileName}.js`;
+        let entryBackDirPath=backDirPath.substring(backDirPath.indexOf('../')+3);
+        let relativeEntryPath=`${entryBackDirPath}/${vuePath.substring(vuePath.indexOf(linkedVueDirName))}`
 
+        if(path.indexOf('/App/Pages')<0)
+        {
+            entryDirPath='';
+        }
 
         fs.exists(jsPath,(exists:boolean)=>{
             if(exists)
@@ -124,6 +136,31 @@ export function activate(context: vscode.ExtensionContext) {
                 });
             });
         });
+
+        fs.exists(entryDirPath,(exists:boolean)=>{
+            if(!exists)
+            {
+               return;
+            }
+
+            mkdir(entryPath,()=>{
+                fs.exists(entryJsPath,(exists:boolean)=>{
+                    if(exists)
+                    {
+                       return;
+                    }
+                    
+                    fs.writeFile(entryJsPath, `require('${entryBackDirPath}/App/Utils/Js/JsExtend.js');import Vue from 'vue';import store from '${entryBackDirPath}/App/Store/index';require('${entryBackDirPath}/App/App.js');require('${entryBackDirPath}/App/App.scss');import App from '${relativeEntryPath}';Vue.config.productionTip=false;new Vue({el:'#app',store,template:'<App/>',components:{App}})`, "utf8", (err:Error) => {
+                        if(err){
+                            vscode.window.showErrorMessage(err.message);
+                            return;
+                        }
+                        vscode.window.showInformationMessage('created successfully!');
+                    });
+                });
+            });
+        });
+
     });
     context.subscriptions.push(addfile);
 }

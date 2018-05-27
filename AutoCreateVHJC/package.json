@@ -2,11 +2,16 @@
     "name": "AddVHJC",
     "displayName": "AddVHJC",
     "description": "auto create vue html js css",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "publisher": "xbzhang",
     "engines": {
         "vscode": "^1.12.0"
     },
+    "keywords":["vue","html","js","css","add"],
+    "author":{
+        "name": "xbzhang",
+        "email": "517681881@qq.com"
+      },
     "categories": [
         "Other"
     ],
