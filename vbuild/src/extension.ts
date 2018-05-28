@@ -3,14 +3,12 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 const shell = require('node-powershell');
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-
-   
     let buildps = new shell({executionPolicy: 'Bypass',noProfile: true});
     let devps:any;
-  
     let runDev = vscode.commands.registerCommand('extension.runDev', (uri) => {
         if (!(uri instanceof vscode.Uri)) {
             vscode.window.showWarningMessage('please select a folder!');

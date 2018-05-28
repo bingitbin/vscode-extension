@@ -2,7 +2,7 @@
 
 一个自动build vue 非单页面的VSCode插件
 
-![效果图](https://raw.githubusercontent.com/bingitbin/vscode-extension/master/VBuild/screenshots/screenshots.png)
+![效果图](https://raw.githubusercontent.com/bingitbin/vscode-extension/master/vbuild/screenshots/screenshots.png)
 
 # Install
 

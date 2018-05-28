@@ -1,81 +1,84 @@
 {
-    "name": "vbuild",
-    "displayName": "VBuild",
-    "description": "build programe",
-    "version": "0.0.1",
-    "publisher": "xbzhang",
-    "engines": {
-        "vscode": "^1.12.0"
-    },
-    "keywords":["vbuild","VBuild"],
-    "author":{
-        "name": "xbzhang",
-        "email": "517681881@qq.com"
+  "name": "vbuild",
+  "displayName": "VBuild",
+  "description": "build programe",
+  "version": "0.1.5",
+  "publisher": "xbzhang",
+  "engines": {
+    "vscode": "^1.12.0"
+  },
+  "keywords": [
+    "vbuild",
+    "VBuild"
+  ],
+  "author": {
+    "name": "xbzhang",
+    "email": "517681881@qq.com"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.runDev",
+    "onCommand:extension.runBuild",
+    "onCommand:extension.runBuildAll"
+  ],
+  "icon": "icon.png",
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.runDev",
+        "title": "run dev"
       },
-    "categories": [
-        "Other"
-    ],
-    "activationEvents": [
-        "onCommand:extension.runDev",
-        "onCommand:extension.runBuild",
-        "onCommand:extension.runBuildAll"
-    ],
-    "icon": "icon.png",
-    "main": "./out/extension",
-    "contributes": {
-        "commands": [
-            {
-            "command": "extension.runDev",
-            "title": "run dev"
-            },
-            {
-                "command": "extension.runBuild",
-                "title": "run build"
-            },
-            {
-                "command": "extension.runBuildAll",
-                "title": "run build all"
-            }
-    ],
-        "menus": {
-            "explorer/context": [
-              {
-                "command": "extension.runDev",
-                "group": "extension",
-                "when": "explorerResourceIsFolder"
-              },
-              {
-                "command": "extension.runBuild",
-                "group": "extension",
-                "when": "explorerResourceIsFolder"
-              },
-              {
-                "command": "extension.runBuildAll",
-                "group": "extension"
-              }
-            ]
-          }
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
-        "tslint": "^5.8.0",
-        "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42",
-        "node-powershell": "^3.3.1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/bingitbin/vscode-extension/tree/master/VBuild"
+      {
+        "command": "extension.runBuild",
+        "title": "run build"
       },
-      "bugs": {
-        "url": "https://github.com/bingitbin/vscode-extension/issues"
+      {
+        "command": "extension.runBuildAll",
+        "title": "run build all"
       }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "extension.runDev",
+          "group": "extension",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "extension.runBuild",
+          "group": "extension",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "extension.runBuildAll",
+          "group": "extension"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.6",
+    "tslint": "^5.8.0",
+    "@types/node": "^7.0.43",
+    "@types/mocha": "^2.2.42",
+    "node-powershell": "^3.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bingitbin/vscode-extension/tree/master/VBuild"
+  },
+  "bugs": {
+    "url": "https://github.com/bingitbin/vscode-extension/issues"
+  }
 }
