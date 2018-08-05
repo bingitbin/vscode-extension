@@ -64,6 +64,7 @@ export function activate(context: vscode.ExtensionContext) {
         let jsPath=`${path}/${fileName}.js`;
         let htmlPath=`${path}/${fileName}.html`;
         let cssPath=`${path}/${fileName}.scss`;
+        let samePathVuePath=`${path}/${fileName}.vue`;
         let linkedVueDirName='linkedvue';
         let linkedVuePath=path.replace('App',linkedVueDirName);
         //路径不一致
@@ -84,6 +85,18 @@ export function activate(context: vscode.ExtensionContext) {
         let entryJsPath=`${entryPath}/${fileName}.js`;
         let entryBackDirPath=backDirPath.substring(backDirPath.indexOf('../')+3);
         let relativeEntryPath=`${entryBackDirPath}/${vuePath.substring(vuePath.indexOf(linkedVueDirName))}`
+        
+        
+        //用linkedvue时注释以下代码
+        /*begin*/
+        entryDirName='Entry';
+        entryPath=path.replace('App/Pages',entryDirName);
+        entryDirPath=entryPath.substring(0,entryPath.indexOf(entryDirName)+entryDirName.length);
+        entryJsPath=`${entryPath}/${fileName}.js`;
+        entryBackDirPath=backDirPath;
+        relativeEntryPath=`${entryBackDirPath}/${relativeDirPath}/${fileName}.vue`
+        /*end*/
+
 
         if(path.indexOf('/App/Pages')<0)
         {
@@ -120,22 +133,37 @@ export function activate(context: vscode.ExtensionContext) {
             });
         });
 
-        mkdir(linkedVuePath,()=>{
-            fs.exists(vuePath,(exists:boolean)=>{
-                if(exists)
-                {
-                   return;
+        fs.exists(samePathVuePath,(exists:boolean)=>{
+            if(exists)
+            {
+               return;
+            }
+            
+            fs.writeFile(samePathVuePath, `<template src="./${fileName}.html"></template><script src="./${fileName}.js"></script><style lang="scss" src="./${fileName}.scss" scoped></style>`, "utf8", (err:Error) => {
+                if(err){
+                    vscode.window.showErrorMessage(err.message);
+                    return;
                 }
-                
-                fs.writeFile(vuePath, `<template src="${relativeLinkPath}.html"></template><script src="${relativeLinkPath}.js"></script><style lang="scss" src="${relativeLinkPath}.scss" scoped></style>`, "utf8", (err:Error) => {
-                    if(err){
-                        vscode.window.showErrorMessage(err.message);
-                        return;
-                    }
-                    vscode.window.showInformationMessage('created successfully!');
-                });
+                vscode.window.showInformationMessage('created successfully!');
             });
         });
+
+        // mkdir(linkedVuePath,()=>{
+        //     fs.exists(vuePath,(exists:boolean)=>{
+        //         if(exists)
+        //         {
+        //            return;
+        //         }
+                
+        //         fs.writeFile(vuePath, `<template src="${relativeLinkPath}.html"></template><script src="${relativeLinkPath}.js"></script><style lang="scss" src="${relativeLinkPath}.scss" scoped></style>`, "utf8", (err:Error) => {
+        //             if(err){
+        //                 vscode.window.showErrorMessage(err.message);
+        //                 return;
+        //             }
+        //             vscode.window.showInformationMessage('created successfully!');
+        //         });
+        //     });
+        // });
 
         fs.exists(entryDirPath,(exists:boolean)=>{
             if(!exists)
