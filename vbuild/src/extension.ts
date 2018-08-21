@@ -2,13 +2,15 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-const shell = require('node-powershell');
+//const shell = require('node-powershell');
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-    let buildps = new shell({executionPolicy: 'Bypass',noProfile: true});
-    let devps:any;
+    // let buildps = new shell({executionPolicy: 'Bypass',noProfile: true});
+    // let devps:any;
+    const terminal = vscode.window.createTerminal('VueProject');
+    terminal.show();
     let runDev = vscode.commands.registerCommand('extension.runDev', (uri) => {
         if (!(uri instanceof vscode.Uri)) {
             vscode.window.showWarningMessage('please select a folder!');
@@ -46,23 +48,25 @@ export function activate(context: vscode.ExtensionContext) {
             page=path.substring(path.indexOf('Pages')+6)+'/'+fileName;
             tpl='mobile.html';
         }
-        if(devps!=null)
-        {
-            devps.dispose();
-        }
-        devps = new shell({executionPolicy: 'Bypass',noProfile: true})
+        // if(devps!=null)
+        // {
+        //     devps.dispose();
+        // }
+        // devps = new shell({executionPolicy: 'Bypass',noProfile: true})
 
-        devps.addCommand('Get-Process -Name node | Stop-Process')
-        devps.addCommand(`cd ${vueProjectDir}`)
-        devps.addCommand(`npm run dev-${runName} page ${page} tpl ${tpl}`)
-        devps.invoke()
-            .then((output:any) => {
-                console.log('run complete');
-                vscode.window.showInformationMessage('run complete!');
-            })
-            .catch((err:any) => {
-                console.error(err);
-            });
+        // devps.addCommand('Get-Process -Name node | Stop-Process')
+        // devps.addCommand(`cd ${vueProjectDir}`)
+        // devps.addCommand(`npm run dev-${runName} page ${page} tpl ${tpl}`)
+        // devps.invoke()
+        //     .then((output:any) => {
+        //         console.log('run complete');
+        //         vscode.window.showInformationMessage('run complete!');
+        //     })
+        //     .catch((err:any) => {
+        //         console.error(err);
+        //     });
+        terminal.sendText(`cd ${vueProjectDir}`);
+        terminal.sendText(`npm run dev-${runName} page ${page} tpl ${tpl}`);
         vscode.window.showInformationMessage('run dev in few secend!');
     });
 
@@ -101,16 +105,18 @@ export function activate(context: vscode.ExtensionContext) {
             vueProjectDir=path.substring(0,mobileIndex)
             page=path.substring(path.indexOf('Pages')+6)+'/'+fileName;
         }
-        buildps.addCommand(`cd ${vueProjectDir}`)
-        buildps.addCommand(`npm run build-${runName} page ${page}`)
-        buildps.invoke()
-            .then((output:any) => {
-                console.log('build complete');
-                vscode.window.showInformationMessage('run ruild complete!');
-            })
-            .catch((err:any) => {
-                console.error(err);
-            });
+        // buildps.addCommand(`cd ${vueProjectDir}`)
+        // buildps.addCommand(`npm run build-${runName} page ${page}`)
+        // buildps.invoke()
+        //     .then((output:any) => {
+        //         console.log('build complete');
+        //         vscode.window.showInformationMessage('run ruild complete!');
+        //     })
+        //     .catch((err:any) => {
+        //         console.error(err);
+        //     });
+        terminal.sendText(`cd ${vueProjectDir}`);
+        terminal.sendText(`npm run build-${runName} page ${page}`);
         vscode.window.showInformationMessage('run build in few minues!');
     });
 
@@ -122,7 +128,7 @@ export function activate(context: vscode.ExtensionContext) {
         let path=uri.fsPath.replace(/\\/g,'\/');
         let pcIndex=path.indexOf('/PC/');
         let mobileIndex=path.indexOf('/Mobile/');
-        if(pcIndex<0||mobileIndex<0)
+        if(pcIndex<0&&mobileIndex<0)
         {
             vscode.window.showWarningMessage('must be under the PC or Mobile\'s subfolder!');
             return;
@@ -139,16 +145,18 @@ export function activate(context: vscode.ExtensionContext) {
             runName='mobile';
             vueProjectDir=path.substring(0,mobileIndex)
         }
-        buildps.addCommand(`cd ${vueProjectDir}`)
-        buildps.addCommand(`npm run build-${runName}`)
-        buildps.invoke()
-            .then((output:any) => {
-                console.log('build all complete');
-                vscode.window.showInformationMessage('run ruild all complete!');
-            })
-            .catch((err:any) => {
-                console.error(err);
-            });
+        // buildps.addCommand(`cd ${vueProjectDir}`)
+        // buildps.addCommand(`npm run build-${runName}`)
+        // buildps.invoke()
+        //     .then((output:any) => {
+        //         console.log('build all complete');
+        //         vscode.window.showInformationMessage('run ruild all complete!');
+        //     })
+        //     .catch((err:any) => {
+        //         console.error(err);
+        //     });
+        terminal.sendText(`cd ${vueProjectDir}`);
+        terminal.sendText(`npm run build-${runName}`);
         vscode.window.showInformationMessage('run build all in few minues!');
     });
 
