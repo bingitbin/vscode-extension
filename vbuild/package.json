@@ -2,7 +2,7 @@
   "name": "vbuild",
   "displayName": "VBuild",
   "description": "build programe",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "publisher": "xbzhang",
   "engines": {
     "vscode": "^1.12.0"
